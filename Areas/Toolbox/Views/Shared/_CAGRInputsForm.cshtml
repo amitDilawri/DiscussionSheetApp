@@ -1,0 +1,81 @@
+﻿@using DiscussionSheetApp.Areas.Toolbox.Data
+@model CAGRCalculationInputs
+
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@*<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $("#submitBtn").click(function () {
+            $("#myForm").submit(); // Submit the form
+        });
+    });
+    
+</script>*@
+
+<div id="displayResultDiv">
+    <div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                @using (Ajax.BeginForm("CompoundAnnualGrowthRateCalc", "Calculators", new { area = "Toolbox" }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "displayResultDiv"@*, InsertionMode = InsertionMode.Replace*@ }, new { id = "myForm" }))
+                                {
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6>@ViewBag.pageHeading</h6>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            @Html.LabelFor(x => x.EndingBalance, new { @class = "font-weight-bold" })
+                                        </div>
+                                        <div class="col">
+                                            @Html.LabelFor(x => x.BeginningBalance, new { @class = "font-weight-bold" })
+
+                                        </div>
+                                        <div class="col">
+                                            @Html.LabelFor(x => x.NumberOfYears, new { @class = "font-weight-bold" })
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            @Html.TextBoxFor(x => x.EndingBalance, new { @class = "form-control", @placeholder = "e.g. 150,000", maxlength = "10" })
+                                        </div>
+                                        <div class="col">
+                                            @Html.TextBoxFor(x => x.BeginningBalance, new { @class = "form-control", @placeholder = "e.g. 50,000", maxlength = "10"})
+                                        </div>
+                                        <div class="col">
+                                            @Html.TextBoxFor(x => x.NumberOfYears, new { @class = "form-control", @placeholder = "e.g. 5", maxlength = "2"})
+                                        </div>
+                                        <div class="col">
+                                            <input type="submit" value="Calculate" class="btn btn-outline-primary" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            @Html.ValidationMessageFor(x => x.EndingBalance, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col">
+                                            @Html.ValidationMessageFor(x => x.BeginningBalance, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col">
+                                            @Html.ValidationMessageFor(x => x.NumberOfYears, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

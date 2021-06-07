@@ -1,0 +1,179 @@
+﻿@using DiscussionSheetApp.Areas.Toolbox.Data
+@model CREAbilityToPayInputs
+
+
+<script src="~/Scripts/CustomJSscipts/jquery.maskMoney.min.js" type="text/javascript"></script>
+<script src="~/Scripts/CustomJSscipts/maskUSCurrency.js"></script>
+<link href="~/Scripts/CustomScripts/CustomBackgroundClasses.css" rel="stylesheet" />
+
+<div id="displayResultDiv">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            @using (Ajax.BeginForm("CREDebtServiceCoverageRatioCalc", "Calculators", new { Area = "Toolbox" }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "displayResultDiv", InsertionMode = InsertionMode.Replace }, new { id = "myform" }))
+                            {
+                                
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">@ViewBag.pageHeading</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col" ><input type="submit" value="Perform Analysis" class="btn btn-outline-success btn-sm" id="submitBtn" style="float:right;" /></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="col" class="table-active">Income</th>
+                                                    <th scope="col" class="table-active">@ViewBag.FirstFYE</th>
+                                                    <th scope="col" class="table-active">@ViewBag.SecondFYE</th>
+                                                    <th scope="col" class="table-active">@ViewBag.Proforma</th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearRents, new { @class = "font-weight-bold", @data_toggle = "tooltip", @title = "Hooray!" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearRents, htmlAttributes: new { @class = "form-control form-control-sm currency", id = "currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearRents, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaYearRents, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearReimbursement, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearReimbursement, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearReimbursement, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaYearReimbursement, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearOtherIncome, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearOtherIncome, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearOtherIncome, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaYearOtherIncome, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.ProformaVacancy, new { @class = "font-weight-bold" })</th>
+                                                    <td></td>
+                                                    <td class="border-right"></td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaVacancy, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:40px;">@Html.LabelFor(x => x.FirstYearNetEffectiveRevenue, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearNetEffectiveRevenue, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearNetEffectiveRevenue, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaNetEffectiveRevenue, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col" class="table-active" colspan="4">Expenses</th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearAdvertising, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearAdvertising, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearAdvertising, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaAdvertising, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearRepairsAndMaintenance, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearRepairsAndMaintenance, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearRepairsAndMaintenance, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaRepairsAndMaintenance, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearCommission, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearCommission, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearCommission, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaCommission, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearInsurance, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearInsurance, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearInsurance, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaInsurance, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearLegalAndProfessionalFees, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearLegalAndProfessionalFees, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearLegalAndProfessionalFees, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaLegalAndProfessionalFees, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearManagementFee, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearManagementFee, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearManagementFee, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaManagementFee, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearTaxes, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearTaxes, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearTaxes, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaTaxes, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearUtilities, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearUtilities, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearUtilities, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaUtilities, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearSalariesAndWages, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearSalariesAndWages, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearSalariesAndWages, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaSalariesAndWages, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearReplacementReserves, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearReplacementReserves, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearReplacementReserves, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaReplacementReserves, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.FirstYearOtherOperatingExpenses, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right">@Html.TextBoxFor(x => x.FirstYearOtherOperatingExpenses, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td class="border-right">@Html.TextBoxFor(y => y.SecondYearOtherOperatingExpenses, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaOtherOperatingExpenses, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" class="table-active">@Html.LabelFor(x => x.FirstYearTotalOperatingExpenses, new { @class = "font-weight-bold" })</th>
+                                                    <td class="border-right table-active">@Html.DisplayTextFor(x => x.FirstYearTotalOperatingExpenses)</td>
+                                                    <td class="border-right table-active">@Html.DisplayTextFor(y => y.SecondYearTotalOperatingExpenses)</td>
+                                                    <td class="table-active">@Html.DisplayTextFor(z => z.ProformaTotalOperatingExpenses)</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:40px;">@Html.LabelFor(x => x.FirstYearNetOperatingIncome, new { @class = "font-weight-bold" })</th>
+                                                    <td>@Html.DisplayTextFor(x => x.FirstYearNetOperatingIncome)</td>
+                                                    <td>@Html.DisplayTextFor(x => x.SecondYearNetOperatingIncome)</td>
+                                                    <td>@Html.DisplayTextFor(z => z.ProformaNetOperatingIncome)</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:40px;">@Html.LabelFor(x => x.FirstYearHistoricalAnnualDebtService, new { @class = "font-weight-bold" })</th>
+                                                    <td>@Html.TextBoxFor(x => x.FirstYearHistoricalAnnualDebtService, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(x => x.SecondYearHistoricalAnnualDebtService, new { @class = "form-control form-control-sm currency" })</td>
+                                                    <td>@Html.TextBoxFor(z => z.ProformaHistoricalDebtAnnualDebtService, new { @class = "form-control form-control-sm bg-light text-dark", @readonly = true })</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:40px;">@Html.LabelFor(x => x.FirstYearDSCR, new { @class = "font-weight-bold" })</th>
+                                                    <td>@Html.DisplayTextFor(x => x.FirstYearDSCR)</td>
+                                                    <td>@Html.DisplayTextFor(y => y.SecondYearDSCR)</td>
+                                                    <td>@Html.DisplayTextFor(z => z.ProformaDSCR)</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding-left:40px;">@Html.LabelFor(x => x.FirstYearExcessCashFlow, new { @class = "font-weight-bold" })</th>
+                                                    <td>@Html.DisplayTextFor(x => x.FirstYearExcessCashFlow)</td>
+                                                    <td>@Html.DisplayTextFor(y => y.SecondYearExcessCashFlow)</td>
+                                                    <td>@Html.DisplayTextFor(z => z.ProformaExcessCashFlow)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

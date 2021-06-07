@@ -1,0 +1,17 @@
+﻿@using DiscussionSheetApp.Areas.Toolbox.ViewModel
+@model DebtCoverageRatioCalc
+
+<div>
+    
+    @Html.Partial("_DSCRInputsForm")
+    <div>
+            <p>EBITDA: @Model.TotalEBITDA</p>
+            <p>Debt: @Model.AnnualDebtService</p>
+            <p>DSCR: @Model.DebtServiceCoverageRatio</p>
+            <p>Excess: @Model.ExcessCashFlowAfterDebtService</p>
+     
+    </div>
+    
+</div>
+
+

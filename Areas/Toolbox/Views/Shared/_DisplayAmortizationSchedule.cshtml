@@ -1,0 +1,149 @@
+﻿@using DiscussionSheetClassLibrary.ToolBoxClasses
+@model DiscussionSheetApp.Areas.Toolbox.ViewModel.LoanAmortizationSchedule
+
+
+<link href="~/Scripts/CustomScripts/Tables.css" rel="stylesheet" />
+
+<div>
+    
+    @Html.Partial("_LoanInputsForm")
+    <div class="card">
+        <div class="card-body">
+            <h5>Summary</h5>
+            <p>Loan: @string.Format("{0:C}", Model.LoanAmount) | Amortization: @Model.Amortization months | Rate: @string.Format("{0:P}", Model.InterestRate / 100) </p>
+            <p>Total Interest Paid: @string.Format("{0:C}", Model.TotalInterest)</p>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Year One</th>
+                        <th scope="col">Year Two</th>
+                        <th scope="col">Year Three</th>
+                        <th scope="col">Year Four</th>
+                        <th scope="col">Year Five</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.amortSummary)
+                {
+                    <tbody>
+                        <tr>
+                            <th scope="row">Principal</th>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearOneAnnualPrincipal, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearTwoAnnualPrincipal, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearThreeAnnualPrincipal, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearFourAnnualPrincipal, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearFiveAnnualPrincipal, 2, MidpointRounding.AwayFromZero))</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Interest</th>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearOneAnnualInterest, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearTwoAnnualInterest, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearThreeAnnualInterest, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearFourAnnualInterest, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearFiveAnnualInterest, 2, MidpointRounding.AwayFromZero))</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total Debt Service</th>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearOneAnnualDebtService, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearTwoAnnualDebtService, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearThreeAnnualDebtService, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearFourAnnualDebtService, 2, MidpointRounding.AwayFromZero))</td>
+                            <td>@string.Format("{0:C}", decimal.Round((decimal)item.YearFiveAnnualDebtService, 2, MidpointRounding.AwayFromZero))</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <br />
+    </div>
+    <div class="card">
+        <blockquote class="blockquote mb-0">
+            <div class="card-body">
+                <table class="tableFixHead table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Months</th>
+                            <th scope="col">Beginning Balance</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Interest</th>
+                            <th scope="col">Principal</th>
+                            <th scope="col">Ending Balance</th>
+                        </tr>
+                    </thead>
+                    @foreach (KeyValuePair<int, AmortizationTable> item in Model.amortTable)
+                    {
+                        <tbody>
+                            <tr>
+                                <th scope="row">@item.Key.ToString()</th>
+                                <td class="border border-left">@string.Format("{0:C}", decimal.Round((decimal)item.Value.BeginningBalance, 2, MidpointRounding.AwayFromZero))</td>
+                                <td class="border border-left">@string.Format("{0:C}", decimal.Round((decimal)item.Value.MonthlyPayment, 2, MidpointRounding.AwayFromZero))</td>
+                                <td class="border border-left">@string.Format("{0:C}", decimal.Round((decimal)item.Value.MonthlyInterest, 2, MidpointRounding.AwayFromZero))</td>
+                                <td class="border border-left">@string.Format("{0:C}", decimal.Round((decimal)item.Value.MonthlyPrincipal, 2, MidpointRounding.AwayFromZero))</td>
+                                <td>@string.Format("{0:C}", decimal.Round((decimal)item.Value.EndingBalance, 2, MidpointRounding.AwayFromZero))</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </blockquote>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

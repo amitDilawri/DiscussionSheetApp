@@ -1,0 +1,53 @@
+﻿@using DiscussionSheetApp.Areas.Toolbox.ViewModel
+@model CAGRCalculationResults
+
+     
+    <div>
+        @Html.Partial("_CAGRInputsForm")
+        <div>
+            <br />
+        </div>
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Summary</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+
+                    
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="padding-left:20px;">Ending Balance:</th>
+                                <td>@string.Format("{0:C}", decimal.Round((decimal)Model.EndingBalance, 2, MidpointRounding.AwayFromZero))</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:20px;">Beginning Balance:</th>
+                                <td>@string.Format("{0:C}", decimal.Round((decimal)Model.BeginningBalance, 2, MidpointRounding.AwayFromZero))</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:20px;">Number of Years:</th>
+                                <td>@Model.NumberOfYears</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:20px;">Compoud Annual Growth Rate (CAGR) = </th>
+
+                                <td>@string.Format("{0:P}", Model.Result)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+            

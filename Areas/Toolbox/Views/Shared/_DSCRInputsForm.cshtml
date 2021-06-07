@@ -1,0 +1,107 @@
+﻿@using DiscussionSheetApp.Areas.Toolbox.Data
+@model DSCRInputs
+
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@*<script src="~/Scripts/CustomJSscipts/jquery.maskMoney.min.js"></script>*@
+
+<script type="text/javascript" language="javascript">
+    //$(document).ready(function () {
+    //    $("#submitBtn").click(function () {
+    //        $("#myForm").submit(); // Submit the form
+    //    });
+    //});
+    $(document).ready(function () {
+        $("#loanInput").change(function add() {
+            var el = document.getElementById('loanInput');
+            var val = el.value.split('+');
+            el.value = val.reduce((a, c) => a + Number(c), 0);
+        });
+    });
+    $(document).ready(function () {
+        $('#interestExpenseTextBox').keyup(function () {
+            $('#displayInterest').text($(this).val());
+        });
+    });
+    $(document).ready(function () {
+        //$(".sum").val("0");
+        //$(".key").val("");
+
+        function calc() {
+            var $preTaxNetIncome = parseFloat($("#preTaxNetIncomeTextBox").val(), 10) || 0;
+            var $depreciation = parseFloat($("#depreciationExpenseTextBox").val(), 10) || 0;
+            var $amortization = parseFloat($("#amortizationExpenseTextBox").val(), 10) || 0;
+            var $interest = parseFloat($("#interestExpenseTextBox").val(), 10) || 0;
+
+            $(".sum").val($preTaxNetIncome + $depreciation + $amortization + $interest);
+        }
+        $(".key").keyup(function () {
+            calc();
+        });
+    });
+</script>
+
+<div id="displayResultDiv">
+    <div>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Debt Service Coverage Ratio</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    
+                    @using (Ajax.BeginForm("DebtServiceCoverageCalc", "Calculators", new { area = "Toolbox" }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "displayResultDiv"@*, InsertionMode = InsertionMode.Replace*@ }, new { id = "myForm" }))
+                    {
+                        <tbody class="">
+                            <tr>
+                                <th scope="row" style="padding-left:20px;" colspan="2">Earnings Before Interest Taxes Depreciation Amortization (EBITDA) </th>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.PreTaxNetIncome, new { @class = "font-weight-bold" })</th>
+                                <td>@Html.TextBoxFor(x => x.PreTaxNetIncome, new { @class = "form-control form-control-sm key", @id = "preTaxNetIncomeTextBox" })</td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.DepreciationExpense, new { @class = "font-weight-bold" })</th>
+                                <td>@Html.TextBoxFor(x => x.DepreciationExpense, new { @class = "form-control form-control-sm key", @id = "depreciationExpenseTextBox" })</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.AmortizationExpense, new { @class = "font-weight-bold" })</th>
+                                <td>@Html.TextBoxFor(x => x.AmortizationExpense, new { @class = "form-control form-control-sm key", @id = "amortizationExpenseTextBox" })</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.InterestExpense, new { @class = "font-weight-bold" })</th>
+                                <td>@Html.TextBoxFor(x => x.InterestExpense, new { @class = "form-control form-control-sm key", id = "interestExpenseTextBox" })</td>
+                            </tr>
+                            <tr>
+                                <th>EBITDA</th>
+                                @*<td><input type="text" class="sum" readonly="readonly"></td>*@
+                                @*<td><span class="sum">@Html.TextBoxFor(x => x.EBITDA, new { @class = "form-control form-control-sm", @readonly = true })</span></td>*@
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:20px;">Debt Obligation (Principal <span>&#38;</span> Interest)</th>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.InterestExpense, new { @class = "font-weight-bold" })</th>                               
+                                <td><span id="displayInterest">@Html.TextBoxFor(x => x.InterestExpense, new { @class = "form-control form-control-sm", @readonly = true})</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="padding-left:30px;">@Html.LabelFor(x => x.AnnualPrincipalPayment, new { @class = "form-weight-bold" })</th>
+                                <td>@Html.TextBoxFor(x => x.AnnualPrincipalPayment, new { @class = "form-control form-control-sm" })</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td><input type="submit" value="Calculate" class="btn btn-outline-primary" /></td>                               
+                            </tr>
+                        </tbody>                       
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

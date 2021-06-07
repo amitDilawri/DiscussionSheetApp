@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/CustomCSS/PageLayoutDesign.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/popper.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+
+
+    @RenderSection("scripts", required: false)
+    @RenderSection("Styles", required: false)
+
+    <title>@ViewBag.Title</title>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <nav class="navbar navbar-expand navbar-dark" style="background-color:peru">
+                <a href="/home/index"><img src="~/Images/thinkingBubbleIcon.png"></a>&nbsp;
+                <a class="navbar-brand" style="font-family:'Arial Rounded MT'" href="/home/index">Discussion Sheet</a>&nbsp;
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/Home/Index"><span class="fas fa-home"></span>&nbsp;Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/Signup">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About Us</a>
+                        </li>
+                        
+                        
+                        <li class="nav-item dropdown">
+                            
+
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-tools"></span>&nbsp;Toolbox
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h6 class="dropdown-header">Amortization Schedule</h6>
+                                @Html.ActionLink("Principal and Interest", "PrincipalAndInterest", "Calculators", new { area = "Toolbox" }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Principal plus Interest", "PrincipalPlusInterest", "Calculators", new { area = "Toolbox" }, new { @class = "dropdown-item" })
+                                <div class="dropdown-divider"></div>
+                                @Html.ActionLink("Compount Annual Growth Rate", "CompoundAnnualGrowthRate", "Calculators", new { area = "Toolbox" }, new { @class = "dropdown-item" })
+                                @*<a class="dropdown-item" href="#">CAGR</a>*@
+                                <div class="dropdown-divider"></div>
+                                @Html.ActionLink("Debt Service Coverage Ratio", "DebtServiceCoverageRatio", "Calculators", new { area = "Toolbox" }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("CRE ATP Analysis", "CREDebtServiceCoverageRatio", "Calculators", new { area = "Toolbox" }, new { @class = "dropdown-item" })
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="navbar-text">
+                        <ul class="nav navbar-nav">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a class="navbar-light" style="font-family:Verdana, Geneva, Tahoma, sans-serif">Dear - @User.Identity.Name</a><span>&nbsp; | &nbsp;</span></li>
+                                <li>@Html.ActionLink("Logout", "Logout", "Account", new { Area = " " }, null)</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div id="body">
+
+            @RenderBody()
+
+        </div>
+        <div>
+            <br />
+        </div>
+        <div id="footer">
+            <nav class="navbar fixed-bottom navbar-expand navbar-dark" style="background-color:peru">
+                <label class="navbar-brand" style="font-family:'Arial Rounded MT'"><span class="fas fa-code"></span>&nbsp; by amit dilawri</label>
+            </nav>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
